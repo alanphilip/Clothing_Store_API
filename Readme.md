@@ -26,10 +26,12 @@ JSON for lightweight storage.
 # Setup Instructions
 Clone the repository: 
 git clone https://github.com/alanphilip/Clothing_Store_API.git
+
 cd clothing-store-api
 
 Create a virtual environment: 
 python -m venv .venv
+
 source .venv/bin/activate  # On Windows: venv\Scripts\activate
 
 Install dependencies
@@ -59,10 +61,6 @@ uvicorn main:app --reload
 All cloth items are stored in clothes.json. On app startup, the file is loaded into memory. New items are appended and saved automatically.
 
 # Future Enhancements
-Add filtering by price or type.
-
-Implement update/delete endpoints.
-
 Switch to a database (e.g., SQLite or PostgreSQL).
 
 Add authentication and user roles
