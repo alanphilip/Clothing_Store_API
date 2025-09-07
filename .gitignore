@@ -1,0 +1,5 @@
+# ignore idea (Intelli-J) dir
+.idea/
+
+# ignore virtual env
+.venv/
