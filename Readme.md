@@ -2,22 +2,30 @@
 A lightweight FastAPI application for managing an online clothing store. It supports listing, adding, and retrieving clothes with persistent storage via a JSON file. Ideal for learning RESTful design, enum usage, and basic file I/O in Python.
 
 # Features
-List all clothes in the store
-Retrieve clothes by index or unique ID
-Add new clothes with automatic UUID generation
-Fetch a random item from the store
-Persist data using a local JSON file
+List all clothes in the store.
+
+Retrieve clothes by index or unique ID.
+
+Add new clothes with automatic UUID generation.
+
+Fetch a random item from the store.
+
+Persist data using a local JSON file.
+
 Categorize clothes using an Enum (tops, bottoms, outerwear, etc.)
 
 # Tech Stack
-FastAPI for API development
-Pydantic for data validation
-Enum for structured cloth types
-JSON for lightweight storage
+FastAPI for API development.
+
+Pydantic for data validation. 
+
+Enum for structured cloth types. 
+
+JSON for lightweight storage. 
 
 # Setup Instructions
 Clone the repository: 
-git clone 
+git clone https://github.com/alanphilip/Clothing_Store_API.git
 cd clothing-store-api
 
 Create a virtual environment: 
@@ -51,9 +59,12 @@ uvicorn main:app --reload
 All cloth items are stored in clothes.json. On app startup, the file is loaded into memory. New items are appended and saved automatically.
 
 # Future Enhancements
-Add filtering by price or type
-Implement update/delete endpoints
-Switch to a database (e.g., SQLite or PostgreSQL)
+Add filtering by price or type.
+
+Implement update/delete endpoints.
+
+Switch to a database (e.g., SQLite or PostgreSQL).
+
 Add authentication and user roles
 
 # Author
