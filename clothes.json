@@ -1,0 +1,86 @@
+[
+  {
+    "cloth_name": "t-shirt",
+    "price": 4.99,
+    "type": "tops",
+    "cloth_id": "3b295a337b5d4e3c93327754a55166b3"
+  },
+  {
+    "cloth_name": "Blouse",
+    "price": 0.99,
+    "type": "tops",
+    "cloth_id": "b72725394c694f11a22009b5b5bf1b88"
+  },
+  {
+    "cloth_name": "Hoodie",
+    "price": 6.99,
+    "type": "tops",
+    "cloth_id": "b04c557e53754667bea5b0cdc0263107"
+  },
+  {
+    "cloth_name": "Kurta",
+    "price": 10.5,
+    "type": "tops",
+    "cloth_id": "9fa47c38a2a24f7487c641ecb73291b3"
+  },
+  {
+    "cloth_name": "Jeans",
+    "price": 7.33,
+    "type": "bottoms",
+    "cloth_id": "6687cd13934b418397a785cd658a4f9c"
+  },
+  {
+    "cloth_name": "Skirt",
+    "price": 7.33,
+    "type": "bottoms",
+    "cloth_id": "d22ab507a5584f139165c5cdea63ecdb"
+  },
+  {
+    "cloth_name": "Shorts",
+    "price": 2.15,
+    "type": "bottoms",
+    "cloth_id": "49ef7e9a541f4d0c94a7677398126953"
+  },
+  {
+    "cloth_name": "Jacket",
+    "price": 8.25,
+    "type": "outerwear",
+    "cloth_id": "e263ad4093114afdb9d74602d68b1f91"
+  },
+  {
+    "cloth_name": "Raincoat",
+    "price": 6.14,
+    "type": "outerwear",
+    "cloth_id": "e0d5bef71c7b43e2a2932964e70b26fd"
+  },
+  {
+    "cloth_name": "Jumpsuit",
+    "price": 6.14,
+    "type": "other_garments",
+    "cloth_id": "3141b795835d4a8aad357de6ae3b88f5"
+  },
+  {
+    "cloth_name": "Socks",
+    "price": 6.14,
+    "type": "essentials",
+    "cloth_id": "b27eb0a4ab754caa910afdd8b55aa64d"
+  },
+  {
+    "cloth_name": "Scarf",
+    "price": 6.14,
+    "type": "essentials",
+    "cloth_id": "d875d82564d7401b8069f5099feec08b"
+  },
+  {
+    "cloth_name": "Belt",
+    "price": 1.5,
+    "type": "essentials",
+    "cloth_id": "71889c4779f0495d99cf7d57a920ad24"
+  },
+  {
+    "cloth_name": "Cap",
+    "price": 0.5,
+    "type": "essentials",
+    "cloth_id": "e9f6d8bb390b4e06a04fe83d647e55d3"
+  }
+]

@@ -1,0 +1,39 @@
+Tops
+====
+T-shirt
+Blouse
+Hoodie
+Tank top
+Kurta
+
+Bottoms
+=======
+Jeans
+Chinos
+Skirt
+Saree
+Shorts
+
+Outerwear
+========
+Jacket
+Blazer
+Raincoat
+Cardigan
+Sherwani
+
+Other garments
+==============
+Dress
+Jumpsuit
+Salwar kameez
+Gown
+Romper
+
+Essentials
+==========
+Socks
+Scarf
+Belt
+Dupatta
+Cap
