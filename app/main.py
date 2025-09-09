@@ -84,3 +84,23 @@ def restore_cloth_endpoint(cloth_id: str, db: Session = Depends(get_db)):
     if not restored:
         raise HTTPException(404, "Cloth not found or already active")
     return restored
+
+@app.get("/paginated-clothes", response_model=list[ClothesOut])
+def paginated_clothes(
+        skip: int = 0,
+        limit: int = 10,
+        sort_by: str = "price",
+        sort_order: str = "asc",
+        is_active: bool | None = None,
+        cloth_type: ClothType | None = None,
+        db: Session = Depends(get_db)
+):
+    return crud.get_paginated_clothes(
+        db,
+        skip=skip,
+        limit=limit,
+        sort_by=sort_by,
+        sort_order=sort_order,
+        is_active=is_active,
+        cloth_type=cloth_type
+    )

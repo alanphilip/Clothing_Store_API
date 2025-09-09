@@ -5,6 +5,7 @@ from typing import Optional, List
 from sqlalchemy.orm import Session
 from app.models import Cloth
 from app.schemas import ClothType
+from sqlalchemy import asc, desc
 
 
 def add_cloth(db: Session, cloth_data: ClothesCreate):
@@ -82,4 +83,25 @@ def restore_cloth(db: Session, cloth_id: str) -> Cloth | None:
     db.refresh(cloth)
     return cloth
 
+def get_paginated_clothes(
+        db: Session,
+        skip: int = 0,
+        limit: int = 10,
+        sort_by: str = "price",
+        sort_order: str = "asc",
+        is_active: bool | None = None,
+        cloth_type: ClothType | None = None
+):
+    query = db.query(Cloth)
 
+    if is_active is not None:
+        query = query.filter(Cloth.is_active == is_active)
+    if cloth_type is not None:
+        query = query.filter(Cloth.type == cloth_type)
+
+    # Sorting logic
+    sort_column = getattr(Cloth, sort_by, None)
+    if sort_column is not None:
+        query = query.order_by(asc(sort_column) if sort_order == "asc" else desc(sort_column))
+
+    return query.offset(skip).limit(limit).all()
