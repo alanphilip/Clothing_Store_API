@@ -61,8 +61,14 @@ uvicorn main:app --reload
 All cloth items are stored in clothes.json. On app startup, the file is loaded into memory. New items are appended and saved automatically.
 
 # Future Enhancements
-
 Add authentication and user roles
+
+add a front end UI
+
+deploy as a web app in azure 
+
+add db name and version into requirements.txt
+
 upgrade to PostgreSQL
 
 # Author

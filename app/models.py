@@ -2,7 +2,6 @@ from sqlalchemy import Column, String, Float, Boolean, Enum, DateTime
 from app.database import Base
 from app.schemas import ClothType, ClothSize
 
-
 class Cloth(Base):
     __tablename__ = "clothes"
 
