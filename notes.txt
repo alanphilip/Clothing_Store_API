@@ -11,3 +11,6 @@ pip install -r requirements.txt
 # update pip
 pip install --upgrade fastapi uvicorn
 
+# uvicorn
+uvicorn app.main:my_app --reload
+

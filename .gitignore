@@ -3,6 +3,7 @@
 
 # ignore virtual env
 .venv/
+.env
 
 old_main.py
 add_db.py

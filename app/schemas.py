@@ -1,22 +1,8 @@
 from pydantic import BaseModel
-from enum import Enum
 from typing import Optional
 from datetime import datetime
+from app.enums import ClothType, ClothSize, UserRole
 
-# 🎯 Enums for cloth type and size
-class ClothType(str, Enum):
-    tops = "tops"
-    bottoms = "bottoms"
-    outerwear = "outerwear"
-    other_garments = "other_garments"
-    essentials = "essentials"
-
-class ClothSize(str, Enum):
-    S = "S"
-    M = "M"
-    L = "L"
-    XL = "XL"
-    XXL = "XXL"
 
 # 🧵 Shared base schema
 class ClothesBase(BaseModel):
@@ -42,3 +28,29 @@ class ClothesOut(ClothesBase):
 
     class Config:
         from_attributes = True
+
+# Auth Schemas
+
+# ✅ Now use it safely
+class UserCreate(BaseModel):
+    username: str
+    password: str
+    role: UserRole = UserRole.user
+
+
+class UserCreate(BaseModel):
+    username: str
+    password: str
+    role: UserRole = UserRole.user
+
+class UserOut(BaseModel):
+    user_id: str
+    username: str
+    role: UserRole
+
+    class Config:
+        from_attributes = True
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str = "bearer"
