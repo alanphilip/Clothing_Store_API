@@ -1,34 +1,28 @@
 Tops
 ====
+Shirt
 T-shirt
 Blouse
-Hoodie
-Tank top
 Kurta
 
 Bottoms
 =======
 Jeans
-Chinos
+Pants
 Skirt
-Saree
 Shorts
 
 Outerwear
 ========
+Hoodie
 Jacket
 Blazer
 Raincoat
-Cardigan
-Sherwani
 
 Other garments
 ==============
-Dress
 Jumpsuit
-Salwar kameez
 Gown
-Romper
 
 Essentials
 ==========

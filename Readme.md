@@ -1,73 +1,46 @@
-# Online Clothing Store API
-A lightweight FastAPI application for managing an online clothing store. It supports listing, adding, and retrieving clothes with persistent storage via a JSON file. Ideal for learning RESTful design, enum usage, and basic file I/O in Python.
+# 👕 Clothes Catalog App
 
-# Features
-List all clothes in the store.
+A full-stack web application for browsing, searching, and managing a catalog of clothes — built with FastAPI on the backend and Vite + React + TypeScript on the frontend. Designed for clarity, responsiveness, and semantic accessibility.
 
-Retrieve clothes by index or unique ID.
+## 🚀 Tech Stack
 
-Add new clothes with automatic UUID generation.
+**Frontend**
+- Vite ⚡ + React + TypeScript
+- Semantic UI mapping with emoji, color-coded categories
+- Responsive card layout with search bar and welcome message
 
-Fetch a random item from the store.
+**Backend**
+- FastAPI 🐍
+- JWT authentication & password hashing
+- SQLAlchemy ORM with PostgreSQL
+- Role-based access control via Swagger/OpenAPI
+- Modular architecture with clean separation of concerns
 
-Persist data using a local JSON file.
+## 📦 Features
 
-Categorize clothes using an Enum (tops, bottoms, outerwear, etc.)
+- 🔍 Searchable clothes list with semantic tags
+- 🧵 Category-based filtering (e.g., 👕 Shirts, 👖 Pants, 🧥 Jackets)
+- 🧠 Backend API with secure endpoints and dependency injection
+- 🛡️ Auth system with hashed passwords and JWT tokens
+- 📊 Swagger docs with role-based visibility
 
-# Tech Stack
-FastAPI for API development.
+## 🧱 Project Structure
 
-Pydantic for data validation. 
+![img.png](img.png)
 
-Enum for structured cloth types. 
 
-JSON for lightweight storage. 
+🌐 API Documentation
+Visit http://localhost:8000/docs for interactive Swagger UI.
 
-# Setup Instructions
-Clone the repository: 
-git clone https://github.com/alanphilip/Clothing_Store_API.git
+🧪 Testing
+Backend: pytest
 
-cd clothing-store-api
-
-Create a virtual environment: 
-python -m venv .venv
-
-source .venv/bin/activate  # On Windows: venv\Scripts\activate
-
-Install dependencies
-pip install -r requirements.txt
-
-Run the server: 
-uvicorn main:app --reload
-
-# API Endpoints
-| Method | Endpoint             | Description            |
-|--------|----------------------|------------------------|
-| GET    | /                    | Welcome message        |
-| GET    | /list-clothes        | List all clothes       |
-| GET    | /cloth-by-index{i}   | Get cloth by index     |
-| GET    | /random-cloth        | Fetch a random cloth   |
-| GET    | /get-cloth?cloth_id= | Retrieve cloth by UUID |
-| POST   | /add-cloth           | Add a new cloth item   |
-
-# Sample POST /add-cloth Request (Json)
-{
-"cloth_name": "Denim Jacket",
-"price": 49.99,
-"type": "outerwear"
-}
-
-# Data Persistence
-All cloth items are stored in clothes.json. On app startup, the file is loaded into memory. New items are appended and saved automatically.
+Frontend: vitest + @testing-library/react
 
 # Future Enhancements
-Add authentication and user roles
+Deploy as a web app in azure
 
-add a front end UI
-
-deploy as a web app in azure 
-
-add db name and version into requirements.txt
+Alembic migrations
 
 upgrade to PostgreSQL
 

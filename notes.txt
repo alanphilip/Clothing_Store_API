@@ -1,8 +1,7 @@
+# Backend
 
-# create a virtual environment
+# create a virtual environment activate inside the backend dir
 python3 -m venv .venv
-
-# activate virtual environment
 source .venv/bin/activate
 
 # install all pip
@@ -11,6 +10,48 @@ pip install -r requirements.txt
 # update pip
 pip install --upgrade fastapi uvicorn
 
-# uvicorn
-uvicorn app.main:my_app --reload
+# uvicorn (run inside Clothing_Store_API)
+uvicorn backend.app.main:app --reload
+
+#================================================
+
+# Front-end (open new terminal)
+
+# create a react app inside the project root (Clothing_Store_API)
+
+Instal nvm (Node Version Manager):
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+
+activate nvm:
+export NVM_DIR="$HOME/.nvm"
+source "$NVM_DIR/nvm.sh"
+
+check nvm version:
+nvm --version
+
+upgrade node:
+nvm install 22
+nvm use 22
+nvm alias default 22
+
+create vite project dir setup:
+npm create vite@latest frontend -- --template react-ts
+cd frontend
+npm install
+npm install axios
+
+start Vite dev server: (inside frontend dir)
+npm run dev
+
+Command	and What It Does
+npm install                 Installs all dependencies listed in package.json
+npm install <package>	    Adds a new package to your project
+npm run dev	                Starts the Vite dev server
+npm run build	            Creates a production-ready build
+npm run lint	            Runs linting (if configured)
+npm uninstall <package>	    Removes a package
+npm update	                Updates all packages to latest compatible versions
+
+
+
 
