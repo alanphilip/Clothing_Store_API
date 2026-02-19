@@ -10,3 +10,7 @@ add_db.py
 clothes_test.db
 clothes.json
 readme_old.txt
+
+# auto generated env files
+__pycache__/
+*.pyc
