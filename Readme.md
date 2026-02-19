@@ -1,6 +1,16 @@
-# 👕 Clothes Catalog App
+# 👕 Clothing Store Management System
+A full‑stack web application for managing clothing inventory with **role‑based access control** (admin vs user). Built using **FastAPI** (backend) and **React + TypeScript** (frontend)
 
-A full-stack web application for browsing, searching, and managing a catalog of clothes — built with FastAPI on the backend and Vite + React + TypeScript on the frontend. Designed for clarity, responsiveness, and semantic accessibility.
+---
+## 📖 Summary
+This project demonstrates:
+- **Secure authentication** with JWT.
+- **Role‑based access control** (admin vs user).
+- **CRUD operations** for clothing inventory.
+- **Session persistence** across page refreshes.
+- **Clean frontend state management** with centralized delete logic.
+
+---
 
 ## 🚀 Tech Stack
 
@@ -9,12 +19,58 @@ A full-stack web application for browsing, searching, and managing a catalog of 
 - Semantic UI mapping with emoji, color-coded categories
 - Responsive card layout with search bar and welcome message
 
-**Backend**
-- FastAPI 🐍
-- JWT authentication & password hashing
-- SQLAlchemy ORM with PostgreSQL
-- Role-based access control via Swagger/OpenAPI
-- Modular architecture with clean separation of concerns
+---
+
+## 🚀 Features Implemented
+
+### Authentication & Authorization
+- **Signup** (`/signup`) – Register new users with username, password, and role.
+- **Login** (`/token`) – Issue JWT access tokens for authenticated users.
+- **Token Verification** (`/token/verify`) – Restore session state after page refresh.
+- **Logout** – Handled on frontend by clearing token.
+- **Role Enforcement** – Admin‑only routes protected via `Depends(admin_required)`.
+
+### User Management (Admin Only)
+- **List All Users** (`/users`) – View all registered users.
+- **Delete User** (`/delete-user/{user_id}`) – Admin can delete other users (not themselves).
+
+### Clothes Management
+- **Add Clothes** (`/add-clothes`) – Admin can add new clothing items.
+- **View Clothes**
+    - `/clothes` – List all clothes.
+    - `/cloth/{cloth_id}` – View a single cloth by ID.
+- **Update Clothes** (`/update-cloth/{cloth_id}`) – Admin can update price, size, type.
+- **Delete Clothes** (`/delete-cloth/{cloth_id}`) – Soft delete (mark inactive).
+
+---
+
+## 🛠️ Backend Implementation
+
+### Tech Stack
+- **FastAPI** – Web framework
+- **SQLAlchemy** – ORM
+- **Passlib** – Password hashing
+- **Python‑Jose** – JWT handling
+- **CORS Middleware** – Allow frontend requests
+
+---
+
+## 🎨 Frontend Implementation
+
+### Tech Stack
+- **React + TypeScript**
+- **Axios** – API calls
+- **React Router** – Navigation
+- **LocalStorage** – Token persistence
+
+### Components
+- **Navbar** – Displays username, role, and logout button.
+- **Login / Signup** – Authentication forms.
+- **AddClothes** – Admin form to add new clothing items.
+- **UpdateCloth** – Admin form to update or delete items.
+- **ViewAllUsers** – Admin table to manage users.
+
+---
 
 ## 📦 Features
 
@@ -24,58 +80,43 @@ A full-stack web application for browsing, searching, and managing a catalog of 
 - 🛡️ Auth system with hashed passwords and JWT tokens
 - 📊 Swagger docs with role-based visibility
 
-## 🧱 Project Structure
+## 🧱 Web App Images
 
-![img.png](img.png)
+#### Frontend
+1. Login screen
+   ![Images/Login.png](Images/Login.png)
+2. SignUp screen
+   ![Images/SignUp.png](Images/SignUp.png)
+3. Home screen
+   ![Images/Home.png](Images/Home.png)
+4. Add Clothes screen
+   ![Images/Add Clothes.png](Images/Add Clothes.png)
+5. Update Clothes screen
+   ![Images/Update Clothes.png](Images/Update Clothes.png)
 
+#### Backend
+1. Backend Methods: GET, POST, DELETE, PUT
+   ![Images/Backend.png](Images/Backend.png)
+ 
+---
 
-🌐 API Documentation
-Visit http://localhost:8000/docs for interactive Swagger UI.
+### 🌐 API Documentation
+* Visit http://localhost:8000/docs for interactive Swagger UI.
 
-🧪 Testing
-Backend: pytest
+### 🧪 Testing
+* Backend: pytest
+* Frontend: vitest + @testing-library/react
 
-Frontend: vitest + @testing-library/react
+---
 
-# Future Enhancements
-Deploy as a web app in azure
+### Future Enhancements
 
-Alembic migrations
+* Deploy as a web app in azure
+* Alembic migrations
+* upgrade to PostgreSQL
 
-upgrade to PostgreSQL
+---
 
-==========================
-
-Here’s a checklist of optional polish and enhancements:
-
-🔄 Frontend Enhancements
-🧹 Add delete/restore buttons for admins
-
-✏️ Add update form (inline or modal)
-
-📂 Filter by type/size (dropdowns)
-
-🧭 Add routing with React Router (e.g. /admin, /login)
-
-🧪 Form validation and error feedback
-
-🧪 Backend Enhancements
-🧾 Add OpenAPI tags and summaries (already started!)
-
-🧪 Add unit tests with pytest
-
-🛡️ Rate limiting or brute-force protection
-
-📦 Switch to PostgreSQL for production
-
-🚀 Add Alembic migrations
-
-🚀 Deployment Ideas
-🐳 Dockerize backend and frontend
-
-🌐 Deploy with Render, Railway, or Fly.io
-
-🔐 Use HTTPS and secure .env handling
-=========================
-# Author
-Built by Alan Philip
+### Author
+* Built by Alan Philip
+* Last Update: 20 - Feb - 2026
