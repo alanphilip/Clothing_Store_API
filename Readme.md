@@ -44,5 +44,38 @@ Alembic migrations
 
 upgrade to PostgreSQL
 
+==========================
+
+Here’s a checklist of optional polish and enhancements:
+
+🔄 Frontend Enhancements
+🧹 Add delete/restore buttons for admins
+
+✏️ Add update form (inline or modal)
+
+📂 Filter by type/size (dropdowns)
+
+🧭 Add routing with React Router (e.g. /admin, /login)
+
+🧪 Form validation and error feedback
+
+🧪 Backend Enhancements
+🧾 Add OpenAPI tags and summaries (already started!)
+
+🧪 Add unit tests with pytest
+
+🛡️ Rate limiting or brute-force protection
+
+📦 Switch to PostgreSQL for production
+
+🚀 Add Alembic migrations
+
+🚀 Deployment Ideas
+🐳 Dockerize backend and frontend
+
+🌐 Deploy with Render, Railway, or Fly.io
+
+🔐 Use HTTPS and secure .env handling
+=========================
 # Author
 Built by Alan Philip

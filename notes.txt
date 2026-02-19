@@ -1,4 +1,4 @@
-# Backend
+## Backend
 
 # create a virtual environment activate inside the backend dir
 python3 -m venv .venv
@@ -10,12 +10,12 @@ pip install -r requirements.txt
 # update pip
 pip install --upgrade fastapi uvicorn
 
-# uvicorn (run inside Clothing_Store_API)
+# uvicorn (run inside Clothing_Store_API dir)
 uvicorn backend.app.main:app --reload
 
 #================================================
 
-# Front-end (open new terminal)
+## Front-end (open new terminal)
 
 # create a react app inside the project root (Clothing_Store_API)
 
@@ -53,5 +53,23 @@ npm uninstall <package>	    Removes a package
 npm update	                Updates all packages to latest compatible versions
 
 
+===========================================================
+Now that your frontend is up, here’s what you might do next:
 
+Connect to your FastAPI backend
+Use Axios to call http://localhost:8000/clothes or other endpoints.
+Set up a proxy in vite.config.ts to avoid CORS issues.
 
+Create components
+Login.tsx, ClothesList.tsx, AdminPanel.tsx, etc.
+
+Store JWT
+Use localStorage or React Context to store and pass the token.
+
+Role-based UI
+Decode JWT and show/hide admin actions based on role.
+============================================
+Let me know when you’re ready to:
+Store the JWT after login
+Use it to protect /add-clothes
+Conditionally show admin features
