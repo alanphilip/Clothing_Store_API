@@ -1,67 +1,54 @@
 import React, { useEffect, useState } from 'react'
+import { Routes, Route, useNavigate } from 'react-router-dom'
+import axios from 'axios'
 import { getClothes } from './api'
-
-const getTypeEmoji = (type: string) => {
-    switch (type.toLowerCase()) {
-        // Tops
-        case 'shirt':
-            return '👔'
-        case 't-shirt':
-            return '👕'
-        case 'blouse':
-            return '👚'
-
-        // Bottoms
-        case 'jeans':
-        case 'pants':
-            return '👖'
-        case 'skirt':
-            return '👗'
-        case 'shorts':
-            return '🩳'
-
-        // Outerwear
-        case 'hoodie':
-        case 'jacket':
-            return '🧥'
-
-        // Essentials
-        case 'socks':
-            return '🧦'
-        case 'scarf':
-            return '🧣'
-        case 'belt':
-            return '🪢'
-        case 'cap':
-            return '🧢'
-
-        default:
-            return '👕👖👗'
-    }
-}
-
-const getTypeColor = (type: string) => {
-    switch (type.toLowerCase()) {
-        case 'tops':
-            return '#90caf9' // blue
-        case 'bottoms':
-            return '#a5d6a7' // green
-        case 'outerwear':
-            return '#ffcc80' // orange
-        case 'essentials':
-            return '#f48fb1' // pink
-        default:
-            return '#e0e0e0' // gray
-    }
-}
+import Login from './Login'
+import Signup from './Signup'
+import AddClothes from './AddClothes'
+import UserList from './UserList'
+import UpdateCloth from './UpdateCloth'
+import Navbar from './Navbar'
 
 const App: React.FC = () => {
     const [clothes, setClothes] = useState<any[]>([])
     const [filtered, setFiltered] = useState<any[]>([])
     const [search, setSearch] = useState('')
     const [loading, setLoading] = useState(true)
+    const [isLoggedIn, setIsLoggedIn] = useState(false)
+    const [showSignup, setShowSignup] = useState(false)
+    const [username, setUsername] = useState('')
+    const [role, setRole] = useState('')
+    const [notification, setNotification] = useState<{ type: 'success' | 'error'; message: string } | null>(null)
+    const [refreshFlag, setRefreshFlag] = useState(false)
+    const navigate = useNavigate()
 
     useEffect(() => {
+        const token = localStorage.getItem("token")
+        if (token) {
+            axios.get("http://localhost:8000/token/verify", {
+                headers: { Authorization: `Bearer ${token}` }
+            })
+                .then(res => {
+                    setUsername(res.data.username)
+                    setRole(res.data.role)
+                    setIsLoggedIn(true)
+                })
+                .catch(err => {
+                    console.error("Token verification failed:", err)
+                    // optional: clear token if invalid
+                    localStorage.removeItem("token")
+                    setIsLoggedIn(false)
+                })
+        }
+    }, [])
+
+    const handleLoginSuccess = (user: string, role: string) => {
+        setUsername(user)       // ✅ store username
+        setRole(role)       // ✅ store role
+        setIsLoggedIn(true)     // ✅ mark user as logged in
+    }
+
+    const fetchClothes = () => {
         getClothes()
             .then((data) => {
                 setClothes(data)
@@ -73,89 +60,211 @@ const App: React.FC = () => {
                 alert('Failed to fetch clothes')
                 setLoading(false)
             })
-    }, [])
+    }
 
     useEffect(() => {
-        const query = search.toLowerCase()
+        if (isLoggedIn) {
+            const token = localStorage.getItem("token")
+            axios.get("http://localhost:8000/clothes", {
+                headers: { Authorization: `Bearer ${token}` }
+            })
+                .then(res => {
+                    console.log("Fetched clothes:", res.data)
+                    setClothes(res.data)
+                    setLoading(false)   // ✅ stop showing "Loading..."
+                })
+                .catch(err => {
+                    console.error("Failed to fetch clothes:", err)
+                    setClothes([])
+                    setLoading(false)   // ✅ stop loading even on error
+                })
+        }
+    }, [isLoggedIn, refreshFlag])
+
+
+    useEffect(() => {
+        const query = (search || "").toLowerCase()
         const results = clothes.filter((c) =>
-            c.name.toLowerCase().includes(query)
+            c.name && c.name.toLowerCase().includes(query)
         )
         setFiltered(results)
     }, [search, clothes])
 
+
+    useEffect(() => {
+        if (notification) {
+            const timer = setTimeout(() => setNotification(null), 3000)
+            return () => clearTimeout(timer)
+        }
+    }, [notification])
+
+    const handleDelete = async (id: number) => {
+        try {
+            const token = localStorage.getItem('token')
+            await axios.delete(`http://localhost:8000/delete-cloth/${id}`, {
+                headers: { Authorization: `Bearer ${token}` }
+            })
+            setNotification({ type: 'success', message: '🗑️ Cloth deleted successfully!' })
+            setRefreshFlag(prev => !prev)
+        } catch {
+            setNotification({ type: 'error', message: '❌ Failed to delete Cloth.' })
+        }
+    }
+
+    const handleLogout = () => {
+        localStorage.removeItem('token')
+        setIsLoggedIn(false)
+        setUsername('')
+        setRole('')
+        navigate('/')   // ✅ redirect to homepage/login
+    }
+
     return (
-        <div
-            style={{
-                padding: '2rem',
-                fontFamily: 'sans-serif',
-                backgroundColor: '#121212',
-                minHeight: '100vh',
-                margin: 0,
-                color: '#fff',
-            }}
-        >
-            <h1 style={{ color: 'limegreen', marginBottom: '1rem' }}>
-                Welcome to Online Clothing Store
-            </h1>
-
-            <input
-                type="text"
-                placeholder="Search clothes by name..."
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                style={{
-                    padding: '0.5rem 1rem',
-                    borderRadius: '6px',
-                    border: 'none',
-                    marginBottom: '2rem',
-                    width: '100%',
-                    maxWidth: '400px',
-                    fontSize: '1rem',
-                }}
-            />
-
-            <h2 style={{ marginBottom: '1rem' }}>Clothes List</h2>
-
-            {loading ? (
-                <p>Loading...</p>
-            ) : filtered.length === 0 ? (
-                <p>No clothes match your search.</p>
-            ) : (
+        <>
+            {notification && (
                 <div
                     style={{
-                        display: 'grid',
-                        gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))',
-                        gap: '1rem',
+                        position: 'fixed',
+                        top: '1rem',
+                        right: '1rem',
+                        backgroundColor: notification.type === 'success' ? '#4caf50' : '#f44336',
+                        color: '#fff',
+                        padding: '0.75rem 1.25rem',
+                        borderRadius: '8px',
+                        boxShadow: '0 2px 10px rgba(0,0,0,0.3)',
+                        fontWeight: 'bold',
+                        animation: 'fadeInOut 3s ease-in-out',
+                        zIndex: 1000,
                     }}
                 >
-                    {filtered.map((c) => (
-                        <div
-                            key={c.cloth_id}
-                            style={{
-                                backgroundColor: '#1e1e1e',
-                                padding: '1rem',
-                                borderRadius: '8px',
-                                boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
-                            }}
-                        >
-                            <h3 style={{ marginBottom: '0.5rem', color: '#90caf9' }}>
-                                {getTypeEmoji(c.name)} {c.name}
-                            </h3>
-                            <p style={{ margin: '0.25rem 0' }}>💲 Price: ${c.price}</p>
-                            <p
-                                style={{
-                                    margin: '0.25rem 0',
-                                    color: getTypeColor(c.type),
-                                }}
-                            >
-                                🧶 Type: {c.type}
-                            </p>
-                            <p style={{ margin: '0.25rem 0' }}>📏 Size: {c.size}</p>
-                        </div>
-                    ))}
+                    {notification.message}
                 </div>
             )}
-        </div>
+
+            <Routes>
+                <Route
+                    path="/"
+                    element={
+                        <div style={{ padding: '2rem', fontFamily: 'sans-serif', backgroundColor: '#121212', minHeight: '100vh', color: '#fff' }}>
+                            <h1 style={{ color: 'limegreen', textAlign: 'center' }}>Welcome to Online Clothing Store</h1>
+
+                            {!isLoggedIn ? (
+                                !showSignup ? (
+                                    <Login
+                                        onLoginSuccess={(uname, role) => {
+                                            setIsLoggedIn(true)
+                                            setUsername(uname)
+                                            setRole(role)   // ✅ use setRole here
+                                        }}
+                                        onSignupClick={() => setShowSignup(true)}
+                                    />
+                                ) : (
+                                    <Signup
+                                        onSignupSuccess={(uname, role) => {
+                                            setIsLoggedIn(true)
+                                            setUsername(uname)
+                                            setRole(role)
+                                            setShowSignup(false)
+                                        }}
+                                        onBackToLogin={() => setShowSignup(false)}
+                                    />
+                                )
+                            ) : (
+                                <>
+                                    <Navbar username={username} role={role} onLogout={handleLogout} />
+
+                                    <div style={{ display: 'flex', gap: '1rem', marginBottom: '2rem', alignItems: 'center' }}>
+                                        <input
+                                            type="text"
+                                            placeholder="Search clothes by name..."
+                                            value={search}
+                                            onChange={(e) => setSearch(e.target.value)}
+                                            style={{ padding: '0.5rem 1rem', borderRadius: '6px', border: 'none', width: '100%', maxWidth: '400px' }}
+                                        />
+                                    </div>
+
+                                    <h2>Clothes List</h2>
+                                    {loading ? (
+                                        <p>Loading...</p>
+                                    ) : filtered.length === 0 ? (
+                                        <p>No clothes match your search.</p>
+                                    ) : (
+                                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))', gap: '1rem' }}>
+                                            {filtered.map((c) => (
+
+
+                                                <div key={c.cloth_id} style={{ backgroundColor: '#1e1e1e', padding: '1rem', borderRadius: '8px' }}>
+                                                    <h3 style={{ color: '#90caf9' }}>{c.name}</h3>
+                                                    <p>💲 Price: ${c.price}</p>
+                                                    <p>🧶 Type: {c.type}</p>
+                                                    <p>📏 Size: {c.size}</p>
+
+                                                    {role === 'admin' && (
+                                                        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '1rem' }}>
+                                                            <button
+                                                                onClick={() => navigate(`/update/${c.cloth_id}`)}
+                                                                style={{ backgroundColor: '#ff9800', color: '#fff', border: 'none', padding: '0.4rem 0.8rem', borderRadius: '6px', cursor: 'pointer' }}
+                                                            >
+                                                                ✏️ Update
+                                                            </button>
+                                                            <button
+                                                                onClick={() => handleDelete(c.cloth_id)}
+                                                                style={{ backgroundColor: '#f44336', color: '#fff', border: 'none', padding: '0.4rem 0.8rem', borderRadius: '6px', cursor: 'pointer' }}
+                                                            >
+                                                                🗑️ Delete
+                                                            </button>
+                                                        </div>
+                                                    )}
+                                                </div>
+
+
+
+                                            ))}
+                                        </div>
+                                    )}
+                                </>
+                            )}
+                        </div>
+                    }
+                />
+                <Route
+                    path="/add"
+                    element={
+                        <>
+                            <Navbar username={username} role={role} onLogout={handleLogout} />
+                            <AddClothes onAddSuccess={() => setRefreshFlag(prev => !prev) || navigate('/')} username={username} role={role} onLogout={handleLogout} />
+                        </>
+                    }
+                />
+                <Route
+                    path="/users"
+                    element={
+                        <>
+                            <Navbar username={username} role={role} onLogout={handleLogout} />
+                            <UserList username={username} role={role} onLogout={handleLogout} />
+                        </>
+                    }
+                />
+                <Route
+                    path="/update/:cloth_id"
+                    element={
+                        <UpdateCloth
+                            username={username}
+                            role={role}
+                            onLogout={handleLogout}
+                            onUpdateSuccess={(updatedCloth) => {
+                                setClothes(prev =>
+                                    prev.map(c => c.cloth_id === updatedCloth.cloth_id ? updatedCloth : c)
+                                )
+                                setRefreshFlag(flag => !flag) // optional if you want to re‑trigger fetch
+                            }}
+                            onDelete={handleDelete}
+                        />
+
+                    }
+                />
+            </Routes>
+        </>
     )
 }
 
