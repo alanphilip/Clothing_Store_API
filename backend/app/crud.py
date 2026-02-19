@@ -5,6 +5,10 @@ from sqlalchemy import asc, desc
 
 from backend.app.schemas import ClothesCreate, ClothesUpdate, ClothType
 from backend.app.models import Cloth
+from sqlalchemy.orm import Session
+from backend.app import models   # ✅ import your models
+from sqlalchemy.orm import Session
+from backend.app import models
 
 
 def add_cloth(db: Session, cloth_data: ClothesCreate):
@@ -12,7 +16,8 @@ def add_cloth(db: Session, cloth_data: ClothesCreate):
         name=cloth_data.name,
         price=cloth_data.price,
         type=cloth_data.type,
-        size=cloth_data.size
+        size=cloth_data.size,
+        is_active=True
     )
     db.add(cloth)
     db.commit()
@@ -21,6 +26,11 @@ def add_cloth(db: Session, cloth_data: ClothesCreate):
 
 def get_cloth(db: Session, cloth_id: str):
     return db.query(Cloth).filter(Cloth.cloth_id == cloth_id).first()
+
+
+def get_clothes(db: Session):
+    return db.query(models.Cloth).all()
+
 
 def list_clothes(db: Session, active_only: bool = None):
     query = db.query(Cloth)
@@ -68,18 +78,6 @@ def filter_clothes(
         query = query.filter(Cloth.is_active == is_active)
 
     return query.all()
-
-# def restore_cloth(db: Session, cloth_id: str) -> Cloth | None:
-#     cloth = db.query(Cloth).filter(Cloth.cloth_id == cloth_id).first()
-#     if not cloth or cloth.is_active:
-#         return None  # Either not found or already active
-#
-#     cloth.is_active = True
-#     cloth.deleted_at = None
-#     cloth.restored_at = datetime.now(UTC)
-#     db.commit()
-#     db.refresh(cloth)
-#     return cloth
 
 def restore_cloth(db: Session, cloth_id: int):
     cloth = db.query(Cloth).filter(Cloth.cloth_id == cloth_id, Cloth.is_active == False).first()
